@@ -12,7 +12,9 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:ifdef-helper.displayIfdefs"
+		"onCommand:ifdef-helper.displayIfdefs",
+		"onLanguage:c",
+		"onLanguage:cpp"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
