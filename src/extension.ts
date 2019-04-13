@@ -4,7 +4,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerTextEditorCommand('ifdef-helper.displayIfdefs', (editor, edit) => {
 		let stack: string[] = [];
 		const doc = editor.document;
-		const line_number = editor.selection.active.line;
+		const line_number = editor.selection.active.line + 1;
 		[...Array(line_number).keys()].forEach((i) => {
 			const line = doc.lineAt(i).text.trim();
 			if (line.startsWith("#if")) {
