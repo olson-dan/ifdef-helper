@@ -38,7 +38,7 @@ const hover: vscode.HoverProvider = {
 			return new vscode.Hover(text);
 		}
 	}
-}
+};
 
 function showActiveIfdefs(editor: vscode.TextEditor, edit: vscode.TextEditorEdit) {
 	let stack: string[] = [];
