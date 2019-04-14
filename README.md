@@ -4,13 +4,13 @@ VSCode Extension to help show active `#ifdef` statements in C and C++ code.
 
 ## Planned Features
 
-- :ballot_box_with_check: Display the `#ifdef` statements active for any line of code.
+- [x] Display the `#ifdef` statements active for any line of code.
 
-- :ballot_box_with_check: Hover over any `#endif` to see its corresponding `#ifdef`.
+- [x] Hover over any `#endif` to see its corresponding `#ifdef`.
 
-- :black_square_button: Jump between `#ifdef` and `#endif` statements.
+- [ ] Jump between `#ifdef` and `#endif` statements.
 
-- :black_square_button: Add an auto-generated comment after an `#endif` statement referencing its corresponding `#ifdef`.
+- [ ] Add an auto-generated comment after an `#endif` statement referencing its corresponding `#ifdef`.
 
 ## Requirements
 
