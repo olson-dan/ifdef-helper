@@ -40,34 +40,40 @@ const hover: vscode.HoverProvider = {
 	}
 }
 
+function showActiveIfdefs(editor: vscode.TextEditor, edit: vscode.TextEditorEdit) {
+	let stack: string[] = [];
+	const doc = editor.document;
+	const line_number = editor.selection.active.line + 1;
+	[...Array(line_number).keys()].forEach((i) => {
+		const line = trimLine(doc.lineAt(i).text);
+		if (line.startsWith("#if")) {
+			stack.push(line);
+		} else if (line.startsWith("#else") || line.startsWith("#elif")) {
+			stack.push(line);
+		} else if (line.startsWith("#endif")) {
+			while (stack.length > 0) {
+				let last = stack.pop();
+				if (last !== undefined) {
+					if (last.startsWith("#if")) {
+						break;
+					}
+				}
+			}
+		}
+	});
+	if (stack.length > 0) {
+		vscode.window.showInformationMessage(stack.join(" -> "));
+	} else {
+		vscode.window.showInformationMessage("No active #ifdefs");
+	}
+}
+
 export function activate(context: vscode.ExtensionContext) {
 
 	let hover1 = vscode.languages.registerHoverProvider('c', hover);
 	let hover2 = vscode.languages.registerHoverProvider('cpp', hover);
 
-	let command1 = vscode.commands.registerTextEditorCommand('ifdef-helper.displayIfdefs', (editor, edit) => {
-		let stack: string[] = [];
-		const doc = editor.document;
-		const line_number = editor.selection.active.line + 1;
-		[...Array(line_number).keys()].forEach((i) => {
-			const line = trimLine(doc.lineAt(i).text);
-			if (line.startsWith("#if")) {
-				stack.push(line);
-			} else if (line.startsWith("#else") || line.startsWith("#elif")) {
-				stack.push(line);
-			} else if (line.startsWith("#endif")) {
-				while (stack.length > 0) {
-					let last = stack.pop();
-					if (last !== undefined) {
-						if (last.startsWith("#if")) {
-							break;
-						}
-					}
-				}
-			}
-		});
-		vscode.window.showInformationMessage(stack.join(" -> "));
-	});
+	let command1 = vscode.commands.registerTextEditorCommand('ifdef-helper.displayIfdefs', showActiveIfdefs);
 
 	context.subscriptions.push(hover1);
 	context.subscriptions.push(hover2);
